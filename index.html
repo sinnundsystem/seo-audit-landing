@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO-Audit – Deine Website auf dem Prüfstand | Sinn + System</title>
+<meta name="description" content="Professioneller SEO-Audit für nur 9,99 € – Performance, Keywords, Backlinks, Wettbewerber. Ergebnisse in Minuten statt Wochen.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #1b1717;
+  --dark-soft: #2d2626;
+  --red: #ce1212;
+  --red-dark: #810000;
+  --cream: #eeebdd;
+  --cream-dark: #e2dfd0;
+  --muted: #7a7268;
+  --border: #d4d0c4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--dark);
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- NOISE OVERLAY --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- HEADER --- */
+header {
+  position: relative;
+  z-index: 1;
+  padding: 24px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo svg {
+  height: 28px;
+  width: auto;
+}
+
+.header-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(238,235,221,0.35);
+}
+
+/* --- HERO --- */
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px 80px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-content { max-width: 560px; }
+
+.hero-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  background: rgba(206,18,18,0.12);
+  border: 1px solid rgba(206,18,18,0.25);
+  padding: 6px 14px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s ease both;
+}
+
+h1 {
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+h1 span { color: var(--red); }
+
+.hero-sub {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(238,235,221,0.65);
+  margin-bottom: 36px;
+  max-width: 480px;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+/* --- PRODUCT IMAGE --- */
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-visual img {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+.hero-visual img:hover {
+  transform: scale(1.03) rotate(-1deg);
+}
+
+/* --- INPUT SECTION --- */
+.input-section {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 40px 40px;
+  animation: fadeUp 0.6s ease 0.35s both;
+}
+
+.input-card {
+  background: rgba(238,235,221,0.04);
+  border: 1px solid rgba(238,235,221,0.08);
+  border-radius: 16px;
+  padding: 36px 40px;
+  backdrop-filter: blur(20px);
+}
+
+.input-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(238,235,221,0.4);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.input-row {
+  display: flex;
+  gap: 12px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 16px 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--cream);
+  background: rgba(238,235,221,0.06);
+  border: 2px solid rgba(238,235,221,0.12);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.url-input::placeholder {
+  color: rgba(238,235,221,0.25);
+}
+
+.url-input:focus {
+  border-color: var(--red);
+  background: rgba(206,18,18,0.04);
+}
+
+.submit-btn {
+  padding: 16px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--red);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(206,18,18,0.3);
+}
+
+.submit-btn:hover {
+  background: var(--red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(206,18,18,0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.input-hint {
+  font-size: 12px;
+  color: rgba(238,235,221,0.3);
+  margin-top: 12px;
+  text-align: center;
+}
+
+.input-error {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 10px;
+  display: none;
+}
+
+/* --- FEATURES --- */
+.features {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.features-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(238,235,221,0.3);
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature {
+  padding: 24px;
+  background: rgba(238,235,221,0.03);
+  border: 1px solid rgba(238,235,221,0.06);
+  border-radius: 12px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.feature:hover {
+  border-color: rgba(206,18,18,0.2);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.feature h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--cream);
+}
+
+.feature p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(238,235,221,0.5);
+}
+
+/* --- PRICING --- */
+.pricing {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
+}
+
+.pricing-card {
+  background: linear-gradient(135deg, rgba(206,18,18,0.08), rgba(129,0,0,0.04));
+  border: 1px solid rgba(206,18,18,0.15);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+}
+
+.pricing-compare {
+  font-size: 14px;
+  color: rgba(238,235,221,0.5);
+  margin-bottom: 8px;
+}
+
+.pricing-agency {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: rgba(238,235,221,0.35);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+
+.pricing-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.price-old {
+  font-family: 'Space Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(238,235,221,0.25);
+  text-decoration: line-through;
+}
+
+.price-arrow {
+  font-size: 24px;
+  color: var(--red);
+}
+
+.price-new {
+  font-family: 'Outfit', sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--red);
+  letter-spacing: -2px;
+}
+
+.price-new small {
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(238,235,221,0.5);
+}
+
+.pricing-note {
+  font-size: 13px;
+  color: rgba(238,235,221,0.4);
+  margin-top: 6px;
+}
+
+/* --- TRUST --- */
+.trust {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 40px 60px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: rgba(238,235,221,0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trust-item::before {
+  content: '✓';
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* --- FOOTER --- */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid rgba(238,235,221,0.06);
+  font-size: 12px;
+  color: rgba(238,235,221,0.2);
+}
+
+footer a {
+  color: rgba(238,235,221,0.35);
+  text-decoration: none;
+}
+
+footer a:hover { color: var(--red); }
+
+/* --- ANIMATIONS --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- GLOW --- */
+.glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(206,18,18,0.07) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-2 {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(129,0,0,0.06) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 800px) {
+  header { padding: 20px 24px; }
+  
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 40px 24px 50px;
+    gap: 40px;
+    text-align: center;
+  }
+  
+  .hero-content { max-width: 100%; }
+  .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+  
+  .hero-visual { order: -1; }
+  .hero-visual img { max-width: 260px; }
+  
+  .input-section { padding: 0 24px 40px; }
+  .input-card { padding: 28px 24px; }
+  
+  .input-row { flex-direction: column; }
+  .submit-btn { width: 100%; padding: 18px; }
+  
+  .features { padding: 40px 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+  
+  .pricing { padding: 20px 24px 40px; }
+  .pricing-card { padding: 32px 24px; }
+  
+  .trust { gap: 20px; padding: 0 24px 40px; }
+}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="glow-2"></div>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 1907.28 181.77" xmlns="http://www.w3.org/2000/svg" fill="#ce1212">
+      <path d="M32.46,176.52c-13.32-3.5-24.14-8.15-32.46-13.98l16.23-36.45c7.82,5.16,16.89,9.32,27.21,12.48,10.32,3.16,20.47,4.74,30.46,4.74,18.98,0,28.46-4.74,28.46-14.23,0-4.99-2.71-8.7-8.11-11.11-5.41-2.41-14.11-4.95-26.09-7.62-13.15-2.83-24.14-5.87-32.96-9.11-8.82-3.25-16.4-8.45-22.72-15.6-6.33-7.15-9.49-16.81-9.49-28.96,0-10.65,2.91-20.26,8.74-28.84,5.82-8.57,14.52-15.36,26.09-20.35C49.39,2.5,63.58,0,80.4,0c11.49,0,22.8,1.29,33.96,3.87,11.15,2.58,20.97,6.37,29.46,11.36l-15.23,36.7c-16.65-8.99-32.79-13.48-48.44-13.48-9.82,0-16.98,1.46-21.47,4.37-4.49,2.91-6.74,6.7-6.74,11.36s2.66,8.16,7.99,10.49c5.33,2.33,13.9,4.74,25.72,7.24,13.32,2.83,24.34,5.87,33.08,9.11,8.74,3.25,16.31,8.41,22.72,15.48,6.41,7.08,9.61,16.69,9.61,28.84,0,10.49-2.91,19.97-8.74,28.46-5.83,8.49-14.57,15.27-26.22,20.35-11.65,5.08-25.8,7.62-42.45,7.62-14.15,0-27.88-1.75-41.2-5.24Z"/>
+      <path d="M173.77,3.5h49.44v174.78h-49.44V3.5Z"/>
+      <path d="M424.7,3.5v174.78h-40.7l-77.15-93.13v93.13h-48.44V3.5h40.7l77.15,93.13V3.5h48.44Z"/>
+      <path d="M625.94,3.5v174.78h-40.7l-77.15-93.13v93.13h-48.44V3.5h40.7l77.15,93.13V3.5h48.44Z"/>
+      <path d="M814.7,100.87h-45.44v44.69h-20.97v-44.69h-45.44v-19.72h45.44v-44.94h20.97v44.94h45.44v19.72Z"/>
+      <path d="M911.81,176.52c-13.32-3.5-24.14-8.15-32.46-13.98l16.23-36.45c7.82,5.16,16.89,9.32,27.21,12.48,10.32,3.16,20.47,4.74,30.46,4.74,18.97,0,28.46-4.74,28.46-14.23,0-4.99-2.71-8.7-8.12-11.11-5.41-2.41-14.11-4.95-26.09-7.62-13.15-2.83-24.14-5.87-32.96-9.11-8.82-3.25-16.4-8.45-22.72-15.6-6.33-7.15-9.49-16.81-9.49-28.96,0-10.65,2.91-20.26,8.74-28.84,5.82-8.57,14.52-15.36,26.09-20.35,11.57-4.99,25.76-7.49,42.57-7.49,11.48,0,22.8,1.29,33.96,3.87,11.15,2.58,20.97,6.37,29.46,11.36l-15.23,36.7c-16.65-8.99-32.79-13.48-48.44-13.48-9.82,0-16.98,1.46-21.47,4.37-4.49,2.91-6.74,6.7-6.74,11.36s2.66,8.16,7.99,10.49c5.33,2.33,13.9,4.74,25.72,7.24,13.31,2.83,24.34,5.87,33.08,9.11,8.74,3.25,16.31,8.41,22.72,15.48,6.4,7.08,9.61,16.69,9.61,28.84,0,10.49-2.91,19.97-8.74,28.46-5.83,8.49-14.57,15.27-26.22,20.35-11.65,5.08-25.8,7.62-42.45,7.62-14.15,0-27.88-1.75-41.2-5.24Z"/>
+      <path d="M1143.02,115.6v62.67h-49.44v-63.42L1026.92,3.5h52.18l41.45,69.41,41.45-69.41h47.94l-66.91,112.11Z"/>
+      <path d="M1238.89,176.52c-13.32-3.5-24.14-8.15-32.46-13.98l16.23-36.45c7.82,5.16,16.89,9.32,27.21,12.48,10.32,3.16,20.47,4.74,30.46,4.74,18.98,0,28.46-4.74,28.46-14.23,0-4.99-2.71-8.7-8.12-11.11-5.41-2.41-14.11-4.95-26.09-7.62-13.15-2.83-24.14-5.87-32.96-9.11-8.82-3.25-16.4-8.45-22.72-15.6-6.33-7.15-9.49-16.81-9.49-28.96,0-10.65,2.91-20.26,8.74-28.84,5.82-8.57,14.52-15.36,26.09-20.35,11.57-4.99,25.76-7.49,42.57-7.49,11.49,0,22.8,1.29,33.96,3.87,11.15,2.58,20.97,6.37,29.46,11.36l-15.23,36.7c-16.65-8.99-32.79-13.48-48.44-13.48-9.82,0-16.98,1.46-21.47,4.37-4.49,2.91-6.74,6.7-6.74,11.36s2.66,8.16,7.99,10.49c5.33,2.33,13.9,4.74,25.72,7.24,13.31,2.83,24.34,5.87,33.08,9.11,8.74,3.25,16.31,8.41,22.72,15.48,6.41,7.08,9.61,16.69,9.61,28.84,0,10.49-2.91,19.97-8.74,28.46-5.83,8.49-14.57,15.27-26.22,20.35-11.65,5.08-25.8,7.62-42.45,7.62-14.15,0-27.88-1.75-41.2-5.24Z"/>
+      <path d="M1414.91,42.7h-53.68V3.5h156.55v39.2h-53.43v135.58h-49.44V42.7Z"/>
+      <path d="M1676.58,140.07v38.2h-140.32V3.5h137.07v38.2h-88.14v29.46h77.65v36.95h-77.65v31.96h91.38Z"/>
+      <path d="M1861.84,178.27l-.5-92.63-44.94,75.4h-21.97l-44.69-72.91v90.13h-45.69V3.5h40.7l61.42,100.87,59.92-100.87h40.7l.5,174.78h-45.44Z"/>
+    </svg>
+  </div>
+  <span class="header-tag">SEO Audit</span>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">KI-gestützter Report</div>
+    <h1>Finde heraus, warum deine Website <span>nicht gefunden wird.</span></h1>
+    <p class="hero-sub">Dein vollständiger SEO-Audit mit Performance-Analyse, Keyword-Rankings, Backlink-Profil und Wettbewerber-Vergleich — in Minuten statt Wochen.</p>
+  </div>
+  <div class="hero-visual">
+    <img src="seo-audit-box.jpeg" alt="SEO-Audit Report" width="380" height="380">
+  </div>
+</section>
+
+<section class="input-section">
+  <div class="input-card">
+    <label class="input-label" for="website-url">Welche Website soll analysiert werden?</label>
+    <div class="input-row">
+      <input 
+        type="text" 
+        id="website-url" 
+        class="url-input" 
+        placeholder="deine-website.de"
+        autocomplete="url"
+        autofocus
+      >
+      <button class="submit-btn" id="start-btn" onclick="startAudit()">
+        Audit starten →
+      </button>
+    </div>
+    <p class="input-hint">Du wirst zur sicheren Bezahlseite weitergeleitet</p>
+    <p class="input-error" id="error-msg">Bitte gib eine gültige Website-Adresse ein.</p>
+  </div>
+</section>
+
+<section class="pricing">
+  <div class="pricing-card">
+    <p class="pricing-compare">Eine SEO-Agentur berechnet dafür 500–2.000 €</p>
+    <div class="pricing-row">
+      <span class="price-old">49,99 €</span>
+      <span class="price-arrow">→</span>
+      <span class="price-new">9,99 <small>€</small></span>
+    </div>
+    <p class="pricing-note">Einmalig · Kein Abo · Report gehört dir</p>
+  </div>
+</section>
+
+<section class="features">
+  <p class="features-title">Das bekommst du in deinem Report</p>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <h3>Performance-Analyse</h3>
+      <p>Lighthouse-Scores, Core Web Vitals, Ladezeiten — alles was Google für dein Ranking misst.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">↗</div>
+      <h3>Keyword-Rankings</h3>
+      <p>Deine Top-Keywords, Suchvolumen, geschätzter Traffic und Quick-Win Potenziale.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⛓</div>
+      <h3>Backlink-Profil</h3>
+      <p>Referring Domains, DoFollow-Anteil, Domain Rank und Link-Qualität auf einen Blick.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⬡</div>
+      <h3>Wettbewerber-Vergleich</h3>
+      <p>Sieh wo du im Vergleich zu deinen Top-5 SEO-Konkurrenten stehst.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>KI-Empfehlungen</h3>
+      <p>Priorisierte Handlungsempfehlungen — generiert von KI basierend auf deinen echten Daten.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <h3>Interaktives Dashboard</h3>
+      <p>Kein PDF-Friedhof. Ein klickbares HTML-Dashboard, das du im Browser öffnest.</p>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <span class="trust-item">Ergebnis per E-Mail in wenigen Minuten</span>
+  <span class="trust-item">Sichere Zahlung über Digistore24</span>
+  <span class="trust-item">Einmalig · Kein Abo</span>
+</div>
+
+<footer>
+  <p>&copy; 2026 Sinn + System · <a href="https://sinnundsystem.de">sinnundsystem.de</a> · <a href="https://www.sinnundsystem.de/Imprint">Impressum</a> · <a href="https://www.sinnundsystem.de/privacy">Datenschutz</a></p>
+</footer>
+
+<script>
+function startAudit() {
+  const input = document.getElementById('website-url');
+  const error = document.getElementById('error-msg');
+  let url = input.value.trim();
+  
+  // Leere Eingabe
+  if (!url) {
+    error.style.display = 'block';
+    input.style.borderColor = '#ce1212';
+    input.focus();
+    return;
+  }
+  
+  // Protokoll entfernen für Validierung
+  const clean = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  
+  // Mindest-Validierung: muss Punkt enthalten
+  if (!clean.match(/^[a-zA-Z0-9][\w.-]*\.[a-zA-Z]{2,}$/)) {
+    error.textContent = 'Bitte gib eine gültige Domain ein (z.B. deine-website.de)';
+    error.style.display = 'block';
+    input.style.borderColor = '#ce1212';
+    input.focus();
+    return;
+  }
+  
+  // Fehler ausblenden
+  error.style.display = 'none';
+  input.style.borderColor = 'rgba(238,235,221,0.12)';
+  
+  // Button-Status ändern
+  const btn = document.getElementById('start-btn');
+  btn.textContent = 'Weiterleitung...';
+  btn.style.pointerEvents = 'none';
+  btn.style.opacity = '0.7';
+  
+  // Zu DS24 weiterleiten mit clean domain
+  window.location.href = 'https://www.digistore24.com/product/671040?custom=' + encodeURIComponent(clean);
+}
+
+// Enter-Taste
+document.getElementById('website-url').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') startAudit();
+});
+
+// Fehler bei Eingabe zurücksetzen
+document.getElementById('website-url').addEventListener('input', function() {
+  document.getElementById('error-msg').style.display = 'none';
+  this.style.borderColor = 'rgba(238,235,221,0.12)';
+});
+</script>
+
+</body>
+</html>
